@@ -1,0 +1,131 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.box {
+  margin: auto;
+  position: relative;
+  min-width: 1654px;
+  max-width: 2560px;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  transition: all 1s;
+}
+.box .back {
+  display: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2560px;
+}
+.box .back img {
+  width: 100%;
+}
+.box .canvas_box {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 2560px;
+  height: 480px;
+}
+.box .canvas_box .canvas {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+.box .canvas_box ._33 {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 760px;
+  width: 640px;
+  height: 480px;
+  cursor: pointer;
+}
+.box .canvas_box .phone {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.box .canvas_box .phone .mask {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.box .canvas_box .phone .img {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  width: auto;
+  transition: all 1s;
+}
+.box .canvas_box .phone .img img {
+  height: 100%;
+}
+.box .canvas_box .phone .img .icon_play {
+  position: absolute;
+  left: 240px;
+  top: 160px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+.box .canvas_box .phone .img .icon_play i {
+  font-size: 50px;
+  color: #fff;
+}
+.box .canvas_box .phone .img .progress_bar {
+  position: absolute;
+  left: 160px;
+  bottom: 60px;
+  width: 200px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.box .canvas_box .phone .img .progress_bar .line {
+  flex: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 50px;
+  background-color: skyblue;
+}
+.box .canvas_box .phone .img .progress_bar .circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: skyblue;
+  border: 6px solid #fff;
+  pointer-events: none;
+}
+.btns {
+  margin-top: 20px;
+  margin: auto;
+  width: 1000px;
+}
+.btns button {
+  margin: 10px;
+  padding: 10px;
+  width: 200px;
+  border: none;
+  background-color: skyblue;
+  cursor: pointer;
+}

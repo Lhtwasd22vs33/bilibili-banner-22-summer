@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./font/iconfont.css">
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <div class="box">
+        <div class="back">
+            <img src="./956de2627e2cc1a9da53ea1d8762cea33e8ea6e5.png@3840w_360h_1c_90q.webp" alt="">
+        </div>
+        
+        <div class="canvas_box">
+
+
+            <canvas class="canvas"></canvas>
+            <div class="_33"></div>
+
+            <div class="phone">
+                <div class="mask"></div>
+                <div class="img">
+                    <img src="./CwEe1GliH5.png" alt="">
+
+                    <div class="icon_play">
+                        <i class="iconfont"></i>
+                    </div>
+                    <div class="progress_bar">
+                        <div class="line"></div>
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        
+        
+        <div class="tv_box"></div>
+    </div>
+
+    <!-- <video src="./0niZsL8MB2.webm" loop autoplay muted controls></video> -->
+</body>
+<script>
+    const videos={
+        '33':'./0niZsL8MB2.webm',
+        'game':'./d6e21ea6c0a43f5d04c46d6d3bf8c2be1f68fa52.webm',
+        "long_water":'./ea6faf4797a9a366c6ea84f99034b6621589ff1d.webm',
+        'short_water':'./YGFpy87q1A.webm',
+        "rain":'./SKE8wd45QU.webm',
+        'turn_page':"./Dxra9kefPp.webm",
+        'eyes':'./eyVg5JzCuv.webm',
+        'read_book':'./jldzj4Xjg6.webm',
+        'up_phone':'./Mkq24Q07yp.webm',
+        "down_phone":'./wVMuVaizdV.webm',
+    }
+    const imgs={
+        'black_back':'./VQj06ftSDE.png',
+        "background":'./NnTy0DIi2R.png',
+        'pc':'./Xm1kA7GtjO.png',
+    }
+    const audios={
+        "rain":'./oucUSOzHs2.mp3',
+        "eyes":'./v1oD0nZzBH.mp3',
+        "turn_page":'./CGa9nSkKhg.mp3',
+        "down_phone":'./QJWxOXQtfA.mp3',
+        "up_phone":'./5gPxskknWD.mp3',
+    }
+    const data={}
+    const imgdata={}
+    const audiodata={}
+    for(x in imgs){
+        let img =document.createElement('img')
+        img.src=imgs[x]
+        imgdata[x]=img
+    }
+    for(i in videos){
+        const video = document.createElement("video");
+
+        video.src = videos[i];
+        video.muted = true;
+        video.autoplay=true;
+        video.loop=true;
+        // 播放时间
+        video.currentTime = 0;
+
+        data[i] = video
+        video.addEventListener("canplaythrough", (res) => {
+            video.play()
+        })
+    }
+    for(i in audios){
+        let audio =document.createElement('audio')
+        audio.src=audios[i]
+        audio.preload='auto'
+
+        audiodata[i]=audio
+    }
+
+
+    let canvas =document.querySelector('.canvas')
+    var ctx=canvas.getContext('2d')
+    canvas.height=480
+    canvas.width=2560
+
+    // 当前播放的动画是哪一个
+    let type_22
+
+    // 随机改变动画的定时器
+    let type_timer
+
+    // 音量
+    let volume = JSON.parse(localStorage.getItem('volume'))||0.5
+
+    // 节流控制
+    let jieliu=false
+
+    // 播放状态
+    let play_type= JSON.parse(localStorage.getItem('play_type'))||false
+
+    if(play_type){
+        document.querySelector('.icon_play i').setAttribute('class','iconfont icon-24gf-pause2')
+    }else{
+        document.querySelector('.icon_play i').setAttribute('class','iconfont icon-bofang')
+    }
+
+    function loop(){
+        let w = canvas.width
+        let h = canvas.height 
+         //清除画布
+        // ctx.fillStyle = `rgba(255, 255, 255,1)`;
+        // ctx.fillRect(0, 0, w, h);
+
+        ctx.drawImage(imgdata.black_back, 0, 0, w, h);
+
+
+        ctx.drawImage(data.rain, 0, 0, w,h);
+        ctx.drawImage(data.game, 2195, 125, 130,64);
+        ctx.drawImage(imgdata.background, 0, 0, w,h);
+        ctx.drawImage(data.long_water, 20, 0, 40,293.33);
+        ctx.drawImage(data.short_water, 230, 0, 66.6,320);
+        ctx.drawImage(imgdata.pc, 0, 0, w,h);
+        ctx.drawImage(data[33], 1880, 68, 266.66,352);
+
+        if(type_22==0){
+            ctx.drawImage(data.read_book, 760, 0, 693.3,480);
+        }
+        if(type_22==1){
+            ctx.drawImage(data.turn_page, 760, 0, 693.3,480);
+        }
+        if(type_22==2){
+            ctx.drawImage(data.eyes, 760, 0, 693.3,480);
+        }
+        if(type_22==3){
+            ctx.drawImage(data.up_phone, 760, 0, 693.3,480);
+        }
+        if(type_22==4){
+            ctx.drawImage(data.down_phone, 760, 0, 693.3,480);
+        }
+
+        requestAnimationFrame(loop)
+    }
+
+
+    function decide_type(){
+        let num = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+
+        if(num==1){
+            type_22=1
+            // 声音
+            audiodata.turn_page.currentTime = 0;
+            audiodata.turn_page.play()
+
+            data.turn_page.currentTime = 0;
+            data.turn_page.loop=false
+            data.turn_page.play()
+        }
+
+        if(num==2){
+            type_22=2
+            // 声音
+            audiodata.eyes.currentTime = 0;
+            audiodata.eyes.play()
+
+            data.eyes.currentTime = 0;
+            data.eyes.loop=false
+            data.eyes.play()
+        }
+    }
+
+    let timer = setInterval(()=>{
+        if(data!={}&&imgdata!={}&&audiodata!={}){
+            type_22=0
+            data.read_book.currentTime = 0;
+            data.read_book.play()
+
+            loop()
+            
+            clearInterval(timer);
+        }
+    },1000)
+
+    function init(){
+        if(play_type){
+            audiodata.rain.currentTime = 0;
+            audiodata.rain.loop = true;
+            audiodata.rain.volume = volume;
+            audiodata.rain.play()
+        }
+    }
+</script>
+<script>
+    // 视频播放结束事件
+
+    // 翻页
+    data.turn_page.addEventListener("ended", () => {
+        if(type_22==1){
+            data.read_book.currentTime = 0;
+            type_22=0;
+        }
+    });
+
+    // 揉眼
+    data.eyes.addEventListener("ended", () => {
+        if(type_22==2){
+            data.read_book.currentTime = 0;
+            type_22=0;
+        }
+    });
+
+    // 拿起手机
+    data.up_phone.addEventListener("ended", () => {
+
+        document.querySelector('.phone .img').style.top='0'
+
+        jieliu=false
+    });
+
+    // 放下手机
+    data.down_phone.addEventListener("ended", () => {
+        
+
+        type_22=0;
+
+        // 弹窗隐藏
+        document.querySelector('.phone').style.display='none'
+        data.read_book.currentTime = 0;
+        type_timer=setInterval(decide_type,1000*12)
+
+        jieliu=false
+    });
+</script>
+<script>
+    // 点击展开banner
+    canvas.onclick=function(){
+        clearInterval(type_timer)
+        document.querySelector('.box').style.height='480px'
+        document.querySelector('._33').style.display='block'
+
+        type_timer=setInterval(decide_type,1000*12)
+
+        init()
+
+        canvas.onclick=null
+    }
+
+    // 点击人物拿起手机
+    document.querySelector('._33').onclick=function(event){
+        if(jieliu){
+            return
+        }
+        jieliu=true
+
+        clearInterval(type_timer)
+        type_22=3
+        // 声音
+        audiodata.up_phone.currentTime = 0;
+        audiodata.up_phone.play()
+
+        // 视频
+        data.up_phone.currentTime = 0;
+        data.up_phone.loop = false;
+        data.up_phone.play()
+
+        // 弹窗显示
+        document.querySelector('.phone').style.display='block'
+    }
+
+    // 点击空白区域放下手机
+    document.querySelector('.phone .mask').onclick=function(event){
+        if(jieliu){
+            return
+        }
+        jieliu=true
+
+        type_22=4
+        // 视频
+        data.down_phone.currentTime = 0;
+        data.down_phone.loop = false;
+        data.down_phone.play()
+        // 声音
+        audiodata.down_phone.currentTime = 0;
+        audiodata.down_phone.play()
+
+        
+        document.querySelector('.phone .img').style.top='100%'
+    }
+
+    // 播放暂停
+    document.querySelector(".phone .img .icon_play").onclick=function(){
+        play_type=!play_type
+        if(play_type){
+            audiodata.rain.currentTime = 0;
+            audiodata.rain.loop = true;
+            audiodata.rain.volume = volume;
+            audiodata.rain.play()
+        }else{
+            audiodata.rain.pause()
+        }
+        if(play_type){
+            document.querySelector('.icon_play i').setAttribute('class','iconfont icon-24gf-pause2')
+        }else{
+            document.querySelector('.icon_play i').setAttribute('class','iconfont icon-bofang')
+        }
+
+        localStorage.setItem('play_type',play_type)
+    }
+
+
+    let line=document.querySelector('.progress_bar')
+    line.onclick=function(){
+        let mousex=Math.floor((event.offsetX/200)*100)
+        document.querySelector('.progress_bar .circle').style.left=mousex+'%'
+        volume=mousex/100
+        audiodata.rain.volume = volume;
+    }
+   
+    line.onmousedown=function(){
+        line.onmousemove=function(event){
+            let mousex=Math.floor((event.offsetX/200)*100)
+            document.querySelector('.progress_bar .circle').style.left=mousex+'%'
+            volume=mousex/100
+            audiodata.rain.volume = volume;
+        } 
+    }
+    line.onmouseup=function(){
+        line.onmousemove=null
+    }
+</script>
+</html>
